@@ -43,12 +43,15 @@ export class Talent {
         this.skillIndex = data.skillIndex;
     }
 
-    getBonus = (round: boolean = false, yBonus: boolean = false, maxBonus: boolean = false) => {
-        const level = maxBonus ? this.maxLevel : this.level
+    protected getBonusAtLevel(level: number, round: boolean = false, yBonus: boolean = false) {
         if (yBonus) {
             return lavaFunc(this.funcY, level, this.y1, this.y2, round);
         }
         return lavaFunc(this.funcX, level, this.x1, this.x2, round);
+    }
+
+    getBonus = (round: boolean = false, yBonus: boolean = false, maxBonus: boolean = false) => {
+        return this.getBonusAtLevel(maxBonus ? this.maxLevel : this.level, round, yBonus);
     }
 
     getBonusText = (): string => {
@@ -92,6 +95,8 @@ export class Talent {
         switch(talentInfo.skillIndex) {
             case 59:
                 return new BloodMarrowTalent(talentName, talentInfo);
+            case 131:
+                return new RedoxRatesTalent(talentName, talentInfo);
             case 146:
                 return new ApocalypseChowTalent(talentName, talentInfo);
             default:
@@ -103,22 +108,22 @@ export class Talent {
 export class BloodMarrowTalent extends Talent {
     totalMeals: number = 0;
 
-    getBonus = (round: boolean = false, yBonus: boolean = false, maxBonus: boolean = false) => {
-        // TODO: I don't like duplicating code, but this is a special case so I'm leaving it for now.
-        let baselineBonus = 0;
-        const level = maxBonus ? this.maxLevel : this.level
-        if (yBonus) {
-            baselineBonus = lavaFunc(this.funcY, level, this.y1, this.y2, round);
-        } else {
-            baselineBonus = lavaFunc(this.funcX, level, this.x1, this.x2, round);
-        }
-        
+    protected override getBonusAtLevel(level: number, round: boolean = false, yBonus: boolean = false) {
+        const baselineBonus = super.getBonusAtLevel(level, round, yBonus);
+
         // Actual special calculation for Blood Marrow.
         return Math.pow(Math.min(1.012, 1 + (baselineBonus / 100)), this.totalMeals);
     }
 
     override getBonusText = (): string => {
         return `${this.getBonus()}% - ${this.totalMeals} Meals`;
+    }
+}
+
+// Other potential talents with this logic are: 42, 43, 78, 132, 281, 491,493
+export class RedoxRatesTalent extends Talent {
+    override getBonus = (round: boolean = false, yBonus: boolean = false) => {
+        return super.getBonusAtLevel(this.pointsSpent, round, yBonus);
     }
 }
 
@@ -215,4 +220,3 @@ export const GetTalentArray = (page: string): Talent[] => {
         return Talent.fromBase(talentName, talentInfo);
     });
 }
-

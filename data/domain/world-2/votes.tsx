@@ -93,7 +93,7 @@ export const updateVotesBonus = (data: Map<string, any>) => {
     const companion19 = companions.find(companion => companion.id == 19);
     const multiFromCompanion19 = companion19?.owned || false ? companion19.data.bonus : 0;
     const multiFromDream13 = (equinox.upgrades[11]?.getBonus() ?? 0);
-    const multiFromHoleCosmo = hole.majiks.IdleonUpgrades.find(upgrade => upgrade.index == 3)?.getBonus() ?? 0;
+    const multiFromHoleCosmo = hole.majiks.IdleonUpgrades.find(upgrade => upgrade.index == 24)?.getBonus() ?? 0;
     const multiFromSUmmoningWinningBonus22 = summoning.summonBonuses.find(bonus => bonus.index == 22)?.getBonus() ?? 0;
     const multiFromEventShop7 = eventShop.isBonusOwned(7) ? 17 : 0;
     const multiFromEventShop16 = eventShop.isBonusOwned(16) ? 13 : 0;

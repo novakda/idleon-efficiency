@@ -461,12 +461,11 @@ export class Player {
         this.crystalChance.sources.push({ name: "Post Office", value: postOfficeBonus });
     }
 
-    setBuildSpeed = (stampsBonusBuildProd: number, constructionBubbleBonus: number, guildBonus5: number, achievement153: number, constructionMasteryBonus: number, 
+    setBuildSpeed = (stampsBonusBuildProd: number, constructionBubbleBonus: number, guildBonus5: number, gearBonus: number, achievement153: number, constructionMasteryBonus: number,
         vialBonusContspd: number, turtleVialBonus: number, arcadeBonus44: number, votingBonus18: number, vaultUpgrade48: number, sheepiesKilled: number,
         bubbaBonus1: number, atomCollider1: number, redoxSaltInStorage: number, winnerBonus13: number, paletteBonus25: number) => {
         const constructionLevel = this.skills.get(SkillsIndex.Construction)?.level || 0;
-        const redoxSaltTalent = this.talents.find(x => x.skillIndex == 131)?.getBonus() ?? 0;
-        const gearBonus = this.getMiscBonusFromGear("Build Spd");
+        const redoxSaltTalentBonus = this.talents.find(x => x.skillIndex == 131)?.getBonus() ?? 0;
         let postOfficeBonus = 0;
         if (this.postOffice) {
             const constructionBox = this.postOffice.find(box => box.name == "Construction Container");
@@ -477,16 +476,17 @@ export class Player {
 
         const baseSpeed = 3 * Math.pow(constructionLevel / 2 + .7, 1.6);
         const bubbleBonus = 1 + constructionLevel * constructionBubbleBonus / 100;
-        const talentBonus = (1 + redoxSaltTalent * (atomCollider1 + lavaLog(redoxSaltInStorage)) / 100);
+        const talentBonus = (1 + redoxSaltTalentBonus * (atomCollider1 + lavaLog(redoxSaltInStorage)) / 100);
         const winnerBonus = 1 + winnerBonus13 / 100;
         const paletteBonus = 1 + paletteBonus25 / 100;
         const vialTurtleBonus = 1 + turtleVialBonus / 100;
         const vaultBonus = vaultUpgrade48 * Math.floor(lavaLog(sheepiesKilled));
-        const totalAdditivePoints = stampsBonusBuildProd + postOfficeBonus + guildBonus5 + gearBonus + achievement153 + constructionMasteryBonus + vialBonusContspd + 
-                                    arcadeBonus44 + votingBonus18 + vaultBonus + bubbaBonus1;        
+        const totalAdditivePoints = stampsBonusBuildProd + postOfficeBonus + guildBonus5 + gearBonus + achievement153 + constructionMasteryBonus + vialBonusContspd +
+            arcadeBonus44 + votingBonus18 + vaultBonus + bubbaBonus1;
         const additiveBonuses = 1 + totalAdditivePoints / 100;
+        const accountMultipliers = winnerBonus * paletteBonus * vialTurtleBonus;
 
-        const totalSpeed = baseSpeed * bubbleBonus * additiveBonuses * talentBonus * winnerBonus * paletteBonus * vialTurtleBonus;
+        const totalSpeed = baseSpeed * bubbleBonus * additiveBonuses * accountMultipliers * talentBonus;
         this.buildSpeed.value = totalSpeed;
         const totalBonusSpeed = totalSpeed - baseSpeed;
 
@@ -1470,6 +1470,10 @@ export const playerExtraCalculations = (data: Map<string, any>) => {
     const redoxSaltsOwned = storage.amountInStorage("Refinery1");
     const winnerBonus13 = summoning.summonBonuses.find(bonus => bonus.index == 13)?.getBonus() || 0;
     const paletteBonus25 = gaming.getPaletteBonus(25);
+    // EtcBonuses("30") reads the active character even when PlayerBuildSpd targets another player.
+    const activePlayer = players.reduce<Player | undefined>((closest, player) =>
+        !closest || player.afkFor < closest.afkFor ? player : closest, undefined);
+    const activePlayerGearBonus = activePlayer?.getMiscBonusFromGear("Build Spd") ?? 0;
 
     // Apply everything to players
     players.forEach(player => {
@@ -1494,7 +1498,7 @@ export const playerExtraCalculations = (data: Map<string, any>) => {
 
         // Build Speed
         const constructionBubbleBonus = alchemy.getBonusForPlayer(player, CauldronIndex.Power, 12);
-        player.setBuildSpeed(buildSpeedStampBonus, constructionBubbleBonus, guildBonus5, achievement153, constructionMasteryBonus, vialEquinoxFishBonus, vialTurtleBonus,
+        player.setBuildSpeed(buildSpeedStampBonus, constructionBubbleBonus, guildBonus5, activePlayerGearBonus, achievement153, constructionMasteryBonus, vialEquinoxFishBonus, vialTurtleBonus,
             arcadeBonus44, votingBonus18, vaultUpgrade48, sheepiesKilled, bubbaBonus1, atomCollider1, redoxSaltsOwned, winnerBonus13, paletteBonus25);
     });
 

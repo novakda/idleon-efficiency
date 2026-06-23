@@ -144,11 +144,13 @@ const parameterSpecs = {
     }
   },
   gear_bonus_etc_bonuses_30: {
-    description: 'Gear bonus from EtcBonuses 30 (tested for player 0)',
+    description: 'Active character gear bonus from EtcBonuses 30',
     extractionKey: 'gear_bonus_etc_bonuses_30',
     domainExtractor: (gameData: Map<string, any>) => {
       const players = gameData.get("players") as Player[];
-      return players[0].getMiscBonusFromGear("Build Spd");
+      const activePlayer = players.reduce<Player | undefined>((closest, player) =>
+        !closest || player.afkFor < closest.afkFor ? player : closest, undefined);
+      return activePlayer?.getMiscBonusFromGear("Build Spd") ?? 0;
     }
   },
 };
