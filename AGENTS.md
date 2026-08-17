@@ -17,7 +17,7 @@ Context-specific guidance lives in [`skills/`](skills/). Read the relevant skill
 | Skill | When to use |
 |-------|-------------|
 | [architecture](skills/architecture/SKILL.md) | Data flow, domain patterns, cross-domain dependencies |
-| [calculation-correctness](skills/calculation-correctness/SKILL.md) | A calculation is wrong / test failing, or expanding test coverage — recursive validation against live game data |
+| [calculation-correctness](skills/calculation-correctness/SKILL.md) | A backend main calculation is wrong or missing — supervised canonical-case workflow with demand-driven live/game-code evidence |
 | [testing](skills/testing/SKILL.md) | Live game extraction testing, domain test writing, validation |
 | [feature-implementation](skills/feature-implementation/SKILL.md) | Implementing new game features and domain logic |
 | [update-game-version](skills/update-game-version/SKILL.md) | New Idleon version released — extract from Steam, process via WikiBot, sync data |
@@ -26,6 +26,20 @@ Context-specific guidance lives in [`skills/`](skills/). Read the relevant skill
 Skills are lightweight pointers to detailed docs. See [`skills/README.md`](skills/README.md) for maintenance guidelines.
 
 **Agent discovery paths:** `skills/` (canonical), `.claude/skills/` and `.cursor/skills/` (symlinked).
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live in GitHub Issues for `Sludging/idleon-efficiency`, using `gh`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the canonical labels `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, and `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+This is a single-context repository with root `CONTEXT.md` and `docs/adr/`. See `docs/agents/domain.md`.
 
 ## Critical Architecture Constraints
 
