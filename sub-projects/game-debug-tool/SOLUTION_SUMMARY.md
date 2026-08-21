@@ -46,6 +46,8 @@ node idleon-debug-server.js
 - `POST /inject` - Inject into running game (auto-skipped if already injected)
 - `POST /exec` - Execute JavaScript expressions in game context
 - `GET /game-info` - Get game object information
+- `GET /game-version` - Current game version from the live `RANDOlist` patch entry (e.g. `{"title":"Summer_Event","version":"1.19"}`)
+- `GET /cloud-save` - Read the authenticated `_data/<uid>` Firestore save document with `source: 'server'`; filters out internal `_-1` keys; merges `playerNames` (from Realtime DB `_uid/<uid>`), `companions` (from the game's `FirebaseStorage.getCompanionInfoMe()`), and `servervars` (from Firestore `_vars/_vars`) to match the raw-data page representation
 
 ### **Usage Examples**
 
@@ -114,6 +116,7 @@ idleon.getAttr(name)                    // Get any game attribute
 idleon.getHP()                          // Get player HP
 idleon.getClass()                       // Get character class  
 idleon.getMap()                         // Get current map
+idleon.getGameVersion()                 // Current game version from live RANDOlist: { title, version }
 
 // DNSM data (main game state) - Returns keys for discovery
 idleon.getDNSM()                        // Get all DNSM categories
@@ -249,7 +252,7 @@ The `DNSM` object contains 200+ game data categories. Key discovered categories 
 ## 🎮 **Complete Workflow**
 
 ### **Setup (One-time)**
-1. Install dependencies: `cd sub-projects/game-debug-tool && npm install`
+1. Install dependencies: `cd sub-projects/game-debug-tool && yarn install`
 2. Start the debug server: `node idleon-debug-server.js`
 
 ### **Game Session**
@@ -258,9 +261,11 @@ The `DNSM` object contains 200+ game data categories. Key discovered categories 
    Start-Process -FilePath "D:\Program Files\Steam\steamapps\common\Legends of Idleon\LegendsOfIdleon.exe" -ArgumentList "--remote-debugging-port=9223"
    ```
 
-2. **Auto-Connect**: Server automatically detects running game and existing injection
+2. **Auto-Connect**: Server automatically detects the running game and existing injection.
 
-3. **Extract Data**: Use HTTP API to call game functions and get live values
+3. **Extract Data**: Run `node tests/helpers/extract-all-game-data.js`. This refreshes
+   `tests/fixtures/saves/latest.json` from the authenticated Firestore save document
+   returned by `GET /cloud-save` and then extracts live values.
 
 ### **Integration with Testing**
 - Use the HTTP API from your test scripts

@@ -6,6 +6,16 @@ This testing approach validates domain calculations against live game data extra
 
 **Operational details:** See also `tests/README.md` (coverage tracking) and `tests/helpers/README.md` (extraction workflow).
 
+## Reasoning
+
+This approach splits our tests into two components, the core test and its matching parameter tests. The reason is that our core calculations could be very complex, therefore a test going red could lead to very long investigation tasks to identify the root cause. By testing the parameters that feed into the core calculation, we are able to narrow down the investigation surface space.
+
+The justification behind this reasoning can be explained by examples:
+- **"Core" means the value users came for**. For the Cooking domain - meal speed and meal bonus are core calculations because when a user visits the Cooking page, that's what they care about. They don't care if we got the bubble bonus calculation correct, or the stamp bonus for meal speed correct, all they want is their main Cooking values to be correct.
+- **"Core" is relative to the domain.** For the Alchemy domain - users now care about the bubble bonus being correct, so that becomes a core calculation for the Alchemy domain.
+- **Parameter tests give indirect coverage before core tests exist.** Our coverage for core calculations might not be complete, therefore bubble bonus calculation might be off without alerting us. However, because bubble bonus feeds the core calculation for meal speed, we will get an indication that bubble bonus is broken by the parameters test for meal speed. This gives us good coverage across many domains without having a large number of core calculations already established.
+- **Parameter tests are the terminology bridge.** For various reasons (such as legacy code or developer personal choice) the terminology in our codebase might differ from the game. For example `msa_1_bonus` is what we extract (and name based on the game code) but maps to `worship.totalizer.getBonus(TotalizerBonus.Cooking)` in our domain. The parameter tests help resolve this ambiguity when looking at our domain code and the game formula by having a direct mapping available.
+
 ## Core Principles
 
 1. **Live Game Extraction**: Extract actual values from running game via debug server
@@ -83,7 +93,7 @@ node tests/helpers/game-data-extractor.js \
 
 **Location:** `tests/fixtures/saves/latest.json`
 
-All tests load save data via `loadGameDataFromSave('latest')`. Update `latest.json` from the idleonefficiency.com raw-data tab when the game state changes. The save must correspond to the same game state used during live extraction.
+All tests load save data via `loadGameDataFromSave('latest')`. Refresh `latest.json` by running the debug server and calling `GET /cloud-save` (e.g. via `node tests/helpers/extract-all-game-data.js`). The endpoint returns the complete, enriched save matching the raw-data page — see the debug server documentation for details.
 
 #### 5. Parameter Tests
 **Location:** `tests/domains/[feature]/[aspect]-parameters.test.ts`
@@ -188,10 +198,12 @@ See existing configs for examples: `tests/configs/cooking-meal-bonus.json`, `tes
 **Prerequisites:**
 1. Launch game with debug port (usually port 9223)
 2. Start debug server: `cd sub-projects/game-debug-tool && node idleon-debug-server.js`
-3. Update `tests/fixtures/saves/latest.json` from idleonefficiency.com raw-data tab
-4. Verify `GET http://localhost:3100/status` reports `cdpConnected: true`, `injected: true`, and
-   `gameReady: true` before extraction. If `/inject` times out or leaves `gameReady: false`, restart
-   the debug server and check `/status` again before running extraction.
+3. Verify `GET http://localhost:3100/status` reports `cdpConnected: true`,
+   `injected: true`, and `gameReady: true` before extraction. If `/inject` times out
+   or leaves `gameReady: false`, check the server logs and `/status` before continuing.
+4. `node tests/helpers/extract-all-game-data.js` refreshes
+   `tests/fixtures/saves/latest.json` through `GET /cloud-save` before running
+   the live-value extraction.
 
 **Run extraction (recommended — all configs):**
 ```bash
@@ -323,7 +335,7 @@ Do not write tests that simply validate parsed save data matches model fields (e
 
 ### What Inputs to Test
 
-For an active calculation-correctness case, extract and test only the smallest demand-driven parameter frontier needed to explain and correct the approved root. Parameters remain evidence inside that root; parameter-only failures do not create correctness cases. Broader feature-test design outside correctness cases remains a separate developer decision.
+For an active calculation-correctness case, extract and test only the smallest demand-driven parameter frontier needed to explain and correct the approved root. The [calculation-correctness playbook](calculation-correctness/PLAYBOOK.md) defines whether a finding stays in the current case or requires a separately selected case. This guide defines how to implement and run the approved test surface. Broader feature-test design outside correctness cases remains a separate developer decision.
 
 ### When to Split Parameter vs Calculation Files
 
@@ -350,7 +362,7 @@ domainExtractor: (_gameData) => {
 
 ### Demand-Driven Parameter Testing
 
-Start from the approved main calculation and add parameter tests only where they reduce uncertainty on its current frontier. Record examined inputs as `GREEN`, `RED`, or `UNKNOWN` in the canonical root checkpoint. A passing parameter closes that branch; a red parameter narrows the mismatch; an unknown remains explicit.
+Start from the approved main calculation and add parameter tests only where they reduce uncertainty on its current frontier. Record examined parameters as GREEN, RED, MISSING in the canonical root checkpoint (statuses defined in the calculation-correctness playbook).
 
 Parameter-first coverage of every transitive input is not a calculation-correctness completion criterion. Completion is the approved root main test plus every targeted test changed or added by the case being green against the accepted pair and current-code ref.
 
