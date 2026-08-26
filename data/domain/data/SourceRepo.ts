@@ -3936,6 +3936,7 @@ export const initSourceRepo = () => {
                     <SourceModel>{"wikiName": "[[Glaciaxus]]", "txtName": "Glaciaxus"},
                     <SourceModel>{"wikiName": "[[Golden Glaciaxus]]", "txtName": "Golden Glaciaxus"},
                     <SourceModel>{"wikiName": "[[Caustic Glaciaxus]]", "txtName": "Caustic Glaciaxus"},
+                    <SourceModel>{"wikiName": "[[Verminous]]", "txtName": "Verminous"},
                     <SourceModel>{"wikiName": "[[Crystal Carrot]]", "txtName": "Crystal Carrot"},
                     <SourceModel>{"wikiName": "[[Crystal Crabal]]", "txtName": "Crystal Crabal"},
                     <SourceModel>{"wikiName": "[[Crystal Cattle]]", "txtName": "Crystal Cattle"},
@@ -4417,6 +4418,19 @@ export const initSourceRepo = () => {
                     <SourceModel>{"wikiName": "[[Caustic Glaciaxus]]", "txtName": "Caustic Glaciaxus"},
                     <SourceModel>{"wikiName": "[[Dungeons]]", "txtName": "Dungeons"}
                 ],
+                "recipeFrom": [],
+                "questAss": []
+            }),
+        new SourcesBase("Sewers2", <SourcesModel>{
+                "sources": [
+                    <SourceModel>{"wikiName": "[[Verminous]]", "txtName": "Verminous"},
+                    <SourceModel>{"wikiName": "[[Rat]]", "txtName": "Rat"}
+                ],
+                "recipeFrom": [],
+                "questAss": []
+            }),
+        new SourcesBase("CardsZ27", <SourcesModel>{
+                "sources": [<SourceModel>{"wikiName": "[[Verminous]]", "txtName": "Verminous"}],
                 "recipeFrom": [],
                 "questAss": []
             }),
@@ -5574,11 +5588,6 @@ export const initSourceRepo = () => {
             }),
         new SourcesBase("DropTable3b", <SourcesModel>{
                 "sources": [<SourceModel>{"wikiName": "[[Poop]]", "txtName": "Poop"}, <SourceModel>{"wikiName": "[[Rat]]", "txtName": "Rat"}],
-                "recipeFrom": [],
-                "questAss": []
-            }),
-        new SourcesBase("Sewers2", <SourcesModel>{
-                "sources": [<SourceModel>{"wikiName": "[[Rat]]", "txtName": "Rat"}],
                 "recipeFrom": [],
                 "questAss": []
             }),
@@ -14730,7 +14739,8 @@ export const initSourceRepo = () => {
                     <SourceModel>{
                         "wikiName": "[[Royal Worm#Bossin' the Boss|Bossin' the Boss]]",
                         "txtName": "Royal Worm: Bossin' the Boss"
-                    }
+                    },
+                    <SourceModel>{"wikiName": "[[Gem Shop]]", "txtName": "Gem Shop"}
                 ],
                 "recipeFrom": [],
                 "questAss": []
@@ -15444,8 +15454,7 @@ export const initSourceRepo = () => {
                     <SourceModel>{
                         "wikiName": "[[Toobus Goobus#RESEARCH STUDIES|RESEARCH STUDIES]]",
                         "txtName": "Toobus Goobus: RESEARCH STUDIES"
-                    },
-                    <SourceModel>{"wikiName": "[[Gem Shop]]", "txtName": "Gem Shop"}
+                    }
                 ],
                 "recipeFrom": [],
                 "questAss": []
@@ -15644,12 +15653,12 @@ export const initSourceRepo = () => {
                 "recipeFrom": [],
                 "questAss": []
             }),
-        new SourcesBase("EquipmentNametag3", <SourcesModel>{
+        new SourcesBase("EquipmentHats140", <SourcesModel>{
                 "sources": [<SourceModel>{"wikiName": "[[Gem Shop]]", "txtName": "Gem Shop"}],
                 "recipeFrom": [],
                 "questAss": []
             }),
-        new SourcesBase("EquipmentHats118", <SourcesModel>{
+        new SourcesBase("EquipmentRings37", <SourcesModel>{
                 "sources": [<SourceModel>{"wikiName": "[[Gem Shop]]", "txtName": "Gem Shop"}],
                 "recipeFrom": [],
                 "questAss": []

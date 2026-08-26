@@ -989,7 +989,18 @@ export const initRandoListRepo = () => {
                     "1400000000",
                     "1600000000",
                     "1800000000",
-                    "2000000000"
+                    "2000000000",
+                    "5000000000.0",
+                    "15000000000.0",
+                    "60000000000.0",
+                    "100000000000.0",
+                    "400000000000.0",
+                    "800000000000.0",
+                    "2000000000000.0",
+                    "5000000000000.0",
+                    "30000000000000.0",
+                    "500000000000000.0",
+                    "10000000000000000.0"
                 ]
             }),
         new RandoListBase(30, <RandoListModel>{
@@ -1893,7 +1904,7 @@ export const initRandoListRepo = () => {
             }),
         new RandoListBase(61, <RandoListModel>{
                 "elements": [
-                    "Glunko_Cavern_v1.18;*Cavern_18_now_available_-_The_CRYSTAL_GLUNKO_COVE!_@_*Collect_gooey_shapes,_from_Triangle_to_Nonagons,_and_use_them_to_upgrade_your_Cove_Stats!_You_have_unique_Drop_Rate,_AFK_gains,_and_Multikill_values_while_fighting_Crystal_Glunkos_in_this_new_cavern!_@_*Each_new_Shape_drop_from_Crystal_Glunkos_is_a_new_Slab_Item!_@_*Green_Water_added_to_Cavern_16_-_The_Fountain._that_means_20_new_Green_Water_upgrades,_including_powerful_multiplicative_IdleOn_bonuses!_@_*7_new_Schematics_to_build_from_Kaipu_the_Engineer_Villager!_@_*6_Star_Cardifiers_are_here,_and_everybody_gets_1_for_free!_In_fact,_if_you're_a_valued_active_player,_I_actually_gave_you_TWO_for_free!_@_*New_Crystalling_Glunko_pack_and_Limited_Items_available_now_in_the_Gemshop!_@_*Kill_Requirement_for_the_next_map_is_now_shown_in_the_top_left,_always!_@_*Fixed_a_bug_where_Dungeon_Rank_60+_would_show_as_Rank_1._Just_a_display_issue,_no_gains_were_lost!;*Le",
+                    "Royal_Guardian_v1.20;*The_newest_masterclass_is_here,_the_ROYAL_GUARDIAN!_Unlock_them_by_completing_Masterius'_quest_in_World_6_on_your_Divine_Knight._@_*As_Royal_Guardian,_you_must_expand_the_Royal_Kingdom_across_all_of_IdleOn,_building_Outposts_and_recruiting_workers,_traders,_militia,_and_more!_@_*Spend_your_Kingdom's_resources_on_70_unique_upgrades_in_the_Royal_Armory,_many_of_which_unlock_new_mechanics_and_huge_bonuses_to_the_rest_of_IdleOn!_@_*New_Mechanic,_Royal_Statues!_Found_within_the_Royal_Castle,_these_give_overpowered_multiplicative_bonuses!_@_*15_new_Royal_Guardian_talents!_@_*New_Miniboss,_Verminous!_Find_them_in_large_swarms_beneath_the_floor_of_the_Royal_Castle._@_*New_Spelunking_Cavern,_the_EXILED_THRONE!_@_*15_new_Spelunking_Shop_upgrades,_including_the_new_MANIC_MODE!_@_*1_New_Research_Grid_upgrade_at_L3,_1_new_Zenith_Market_upgrade,_4_new_Sushi_Tiers,_1_new_Giant_Doodlefish_advice_to_buy,_and_1_new_Orange_Alchemy_bubble!_@_*Boss_Raids_added_to_The_Grand_Tournament!;*Le",
                     "Monde",
                     "6",
                     "est",
@@ -2418,7 +2429,8 @@ export const initRandoListRepo = () => {
                     "frogGR",
                     "frogGR2",
                     "frogGR3",
-                    "Meteor"
+                    "Meteor",
+                    "demonPtutorial"
                 ]
             }),
         new RandoListBase(66, <RandoListModel>{

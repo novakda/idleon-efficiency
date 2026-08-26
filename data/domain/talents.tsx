@@ -92,7 +92,7 @@ export class Talent {
     }
 
     static fromBase = (talentName: string, talentInfo: TalentModel) => {
-        switch(talentInfo.skillIndex) {
+        switch (talentInfo.skillIndex) {
             case 59:
                 return new BloodMarrowTalent(talentName, talentInfo);
             case 131:
@@ -142,7 +142,7 @@ export class ApocalypseChowTalent extends EnhancedTalent {
         return Math.pow(1.1, this.killsOver100M);
     }
 
-    
+
     override getBonusText = (): string => {
         return `Enhanced: ${Math.floor(this.getEnhancedBonus())}x - ${this.killsOver100M} Apocalypses Chowed`;
     }
@@ -160,8 +160,8 @@ export enum ClassIndex {
     Squire = 9,
     Blood_Berserker = 10,
     Divine_Knight = 12,
-    Royal_Guardian = 13,
     Death_Bringer = 14,
+    Royal_Guardian = 16,
     Archer = 19,
     Bowman = 20,
     Hunter = 21,
@@ -191,7 +191,7 @@ export const ClassTalentMap: Record<ClassIndex, string[]> = {
     [ClassIndex.Blood_Berserker]: ["Rage Basics", "Warrior", "Barbarian", "Blood Berserker"],
     [ClassIndex.Death_Bringer]: ["Rage Basics", "Warrior", "Barbarian", "Blood Berserker", "Death Bringer"],
     [ClassIndex.Divine_Knight]: ["Rage Basics", "Warrior", "Squire", "Divine Knight"],
-    [ClassIndex.Royal_Guardian]: [],
+    [ClassIndex.Royal_Guardian]: ["Rage Basics", "Warrior", "Squire", "Divine Knight", "Royal Guardian"],
     [ClassIndex.Archer]: ["Calm Basics", "Archer"],
     [ClassIndex.Bowman]: ["Calm Basics", "Archer", "Bowman"],
     [ClassIndex.Hunter]: ["Calm Basics", "Archer", "Hunter"],

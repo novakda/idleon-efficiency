@@ -266,9 +266,9 @@ export const initMapDataRepo = () => {
                 "portalRequirements": [0]
             }),
         new MapDataBase(43, <MapDataModel>{
-                "enemy": "Z",
+                "enemy": "Nothing",
                 "world": "Blunder Hills",
-                "map": <MapNameModel>{"intName": "Z", "name": "Z", "id": 43},
+                "map": <MapNameModel>{"intName": "GrasslandsH", "name": "The Royal Castle", "id": 43},
                 "portalRequirements": [0]
             }),
         new MapDataBase(44, <MapDataModel>{
@@ -1942,7 +1942,7 @@ export const initMapDataRepo = () => {
         new MapDataBase(322, <MapDataModel>{
                 "enemy": "w7b8",
                 "world": "Shimmerfin Deep",
-                "map": <MapNameModel>{"intName": "uAquaB8", "name": "fillername", "id": 322},
+                "map": <MapNameModel>{"intName": "uAquaB8", "name": "The Glowing Underbelly", "id": 322},
                 "portalRequirements": [500000000]
             }),
         new MapDataBase(323, <MapDataModel>{

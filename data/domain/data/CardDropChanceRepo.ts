@@ -6,6 +6,7 @@ export class CardDropChanceBase { constructor(public id: string, public data: Ca
 
 export const initCardDropChanceRepo = () => {
     return [    
+        new CardDropChanceBase("CardsZ27", <CardDropChanceModel>{"dropChance": 1e-07}),
         new CardDropChanceBase("CardsA14", <CardDropChanceModel>{"dropChance": 0.01}),
         new CardDropChanceBase("CardsB13", <CardDropChanceModel>{"dropChance": 0.008}),
         new CardDropChanceBase("CardsE15", <CardDropChanceModel>{"dropChance": 0.008}),
@@ -145,8 +146,8 @@ export const initCardDropChanceRepo = () => {
         new CardDropChanceBase("CardsJ17", <CardDropChanceModel>{"dropChance": 1.5e-06}),
         new CardDropChanceBase("CardsJ18", <CardDropChanceModel>{"dropChance": 7e-07}),
         new CardDropChanceBase("CardsJ19", <CardDropChanceModel>{"dropChance": 5e-07}),
-        new CardDropChanceBase("CardsJ20", <CardDropChanceModel>{"dropChance": 3e-07}),
-        new CardDropChanceBase("CardsJ21", <CardDropChanceModel>{"dropChance": 2e-07}),
+        new CardDropChanceBase("CardsJ20", <CardDropChanceModel>{"dropChance": 2e-07}),
+        new CardDropChanceBase("CardsJ21", <CardDropChanceModel>{"dropChance": 1.5e-07}),
         new CardDropChanceBase("CardsJ22", <CardDropChanceModel>{"dropChance": 1e-07}),
         new CardDropChanceBase("CardsJ23", <CardDropChanceModel>{"dropChance": 1e-07}),
         new CardDropChanceBase("CardsJ24", <CardDropChanceModel>{"dropChance": 3e-08}),
